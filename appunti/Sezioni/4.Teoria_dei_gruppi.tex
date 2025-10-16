@@ -1,0 +1,730 @@
+\section{Teoria dei Gruppi}
+\subsection{Definizioni}
+
+Diamo la definizione di \textit{gruppo}:
+
+un gruppo $G$ è un insieme di elementi $\{g_i\}$ dotato di un legge di composizione interna $\cdot$ che gode delle seguenti proprietà:
+\begin{enumerate}
+    \item chiusura: $\forall g_i,g_j\in G \quad:\quad g_i\cdot g_j\in G$;
+    \item associatività: $g_i\cdot (g_j\cdot g_k)=g_k\cdot (g_i\cdot g_j)$;
+    \item identità: $\forall g_i\in G, \quad\exists g_0\in G \quad : \quad  g_i\cdot g_0= g_0\cdot g_i=g_i $;
+    \item inverso: $\forall g_i\in G, \quad\exists g_i^{-1}\in G \quad : \quad  g_i\cdot g_i^{-1}= g_i^{-1}\cdot g_i=g_0$.
+\end{enumerate}
+inoltre, se vale la proprietà commutativa $g_i\cdot g_j=g_j\cdot g_i$ il gruppo $G$ è detto \textit{abeliano}.
+
+Definiamo una \textit{rappresentazione del gruppo} come un insieme di di operatori lineari $\{T_i\}$, il quale è un omomorfismo che associa ad ogni elemento del gruppo un operatore lineare.
+
+Quindi, $\forall g_i\in G\xrightarrow{omo}T(g_i):L\xrightarrow{}L$, ove $L$ è uno spazio lineare. Gli operatori riproducono le proprietà del gruppo di partenza:
+\begin{enumerate}
+    \item  $T(g_i)T(g_j)=T(g_i\cdot g_j)\qquad\forall i,j$;
+    \item $T(g_0)=\mathds{I}$;
+    \item  $T(g_i^{-1})=T^{-1}(g_i) \qquad\forall i$.
+\end{enumerate}
+Inoltre, diremo che la dimensione della rappresentazione è pari alla dimensione dello spazio vettoriale. Le rappresentazioni si caratterizzano per quelle finite dimensionali e per quelle infinite dimensionali.
+
+\subsection{Gruppo per rotazioni}
+I primi gruppi di interesse in fisica sono quelli che rappresentano rotazioni. In particolare, in forma matriciale e vettoriale abbiamo:
+\begin{equation}
+\begin{pmatrix}
+x'   \\
+y'   \\
+ z'  \\
+\end{pmatrix}
+=R\begin{pmatrix}
+x \\
+y   \\
+ z  \\
+\end{pmatrix}\qquad
+\Vec{r'}=R\Vec{r}
+\end{equation}
+ove $R$ è una matrice $3\times3$. Sotto rotazioni sappiamo che deve preservare l'invariante:
+\begin{equation}
+\begin{gathered}
+    x'^2+y'^2+z'^2=x^2+y^2+z^2 \implies \Vec{r'}^T\Vec{r'}=\Vec{r}^T\Vec{r}\implies\\
+    \Vec{r}^TR^TR\Vec{r}=\Vec{r}^T\Vec{r}\implies R^TR=\mathds{I}\implies R^T=R^{-1}
+\end{gathered}
+\end{equation}
+Matrici $3\times3$ di questo tipo sono dette \textit{ortogonali}. Tutte le proprietà della definizione di gruppo sono soddisfatte, quindi definiamo il gruppo $O(3)$ di matrici ortogonali $\{R\}$.
+
+Considerando il determinante della relazione matriciale precedente:
+\begin{equation}   \det\left[R^TR\right]=1\implies \det\left[R\right]^2=1 \implies \det\left[R\right]=\pm1
+\end{equation}
+se il determinate è $-1$ si ha l'inversione spaziale, ossia una trasformazione discreta, che è la parità. Mentre per determinate pari a $1$ si hanno le trasformazioni dette speciali e il gruppo associato è $SO(3)$.
+Noi ci limiteremo a quest'ultimo gruppo.
+
+Consideriamo l'esempio di una rotazione nel piano $x-y$: 
+\begin{equation}
+    \Vec{v}'=R_z(\theta)\Vec{v}\qquad
+    \begin{pmatrix}
+v_x'   \\
+v_y'   \\
+ v_z'  \\
+\end{pmatrix}
+=    \begin{pmatrix}
+ \cos{\theta}&\sin{\theta}&0  \\
+  -\sin{\theta}&\cos{\theta}&0\\
+0&0&1\\
+\end{pmatrix}
+\begin{pmatrix}
+v_x \\
+v_y   \\
+ v_z  \\
+\end{pmatrix}
+\end{equation}
+In maniera analoga possiamo definire le rotazioni attorno agli assi $x$ e $y$, le cui matrici associate sono:
+\begin{equation}
+  R_x(\phi)= \begin{pmatrix}
+  1&0&0\\
+0& \cos{\phi}&\sin{\phi} \\
+ 0& -\sin{\phi}&\cos{\phi}\\
+\end{pmatrix}\qquad
+  R_y(\psi)= \begin{pmatrix}
+ \cos{\psi}&0&0-\sin{\psi} \\
+ 0&1&0\\
+  \sin{\psi}&0&\cos{\psi}\\
+\end{pmatrix}
+\end{equation}
+si verifica immediatamente che $ R_x(\phi)\cdot R_y(\psi)\neq R_y(\psi)\cdot R_x(\phi)$, quindi il gruppo di rotazioni non è abeliano.
+
+Sappiamo che una rotazione generica può sempre essere scomposta in tre rotazioni elementari attorno agli assi, da cui segue che, in generale, una rotazione dipende da tre parametri\footnote{Ciò non è nuovo, un esempio sono gli angoli di Eulero.}. Quindi, ogni elemento del gruppo dipende da tre parametri, e per questo il gruppo viene detto \textit{a tre parametri}\footnote{Notiamo il fatto che il numero di parametri sia uguale alla dimensione della rappresentazione non è una legge, si tratta di un caso. Infatti, più avanti, vedremo esempi nei quali ciò non avviene.}. 
+Poiché le rotazioni sono funzioni continue, avremo che il gruppo di rotazioni ha infiniti elementi. Inoltre abbiamo che gli elementi del gruppo $SO(3)$ sono funzioni classe $C^\infty$, un tale gruppo è un \textit{gruppo di Lie}.
+
+In generale, le componenti indipendenti di una matrice $3\times3$ sono $9$ , tuttavia abbiamo imposto la condizione $R^TR=\mathds{I}$ la quale coinvolge $6$ relazioni e quindi abbiamo $9-6=3$, che è la dimensione della rappresentazione.
+
+Introduciamo il concetto di \textit{generatore del gruppo}, ossia una rotazione infinitesima. In particolare i generatori del gruppo $SO(3)$\footnote{Non consideriamo l'elemento del gruppo $O(3)$ che ha determinate pari a $-1$, poiché nella definizione di generatore è presente la variazione continua dei parametri. Essendo la parità discreta ciò non è possibile.} sono:
+\begin{equation}
+    J_z=\dfrac{1}{i}\dfrac{dR_z}{d\theta}(\theta)\biggm|_{\theta=0}= 
+    \begin{pmatrix}
+         0&-i&0  \\
+  i&0&0\\
+0&0&0\\
+    \end{pmatrix}
+\end{equation}
+\begin{equation}
+    J_x=\dfrac{1}{i}\dfrac{dR_x}{d\phi}(\phi)\biggm|_{\phi=0}= 
+    \begin{pmatrix}
+         0&0&0  \\
+  0&0&-i\\
+0&i&0\\
+    \end{pmatrix}
+\end{equation}
+\begin{equation}
+    J_y=\dfrac{1}{i}\dfrac{dR_y}{d\psi}(\psi)\biggm|_{\psi=0}= 
+    \begin{pmatrix}
+         0&0&i  \\
+  0&0&0\\
+-i&0&0\\
+    \end{pmatrix}
+\end{equation}
+notiamo che tali matrici sono tutte hermitiane e non commutano. Considerando il commutatore abbiamo:
+\begin{equation}\phantomsection\label{eq:alg_lie_so3}
+    \left[J_i,J_j\right]=i\epsilon_{ijk}J_k
+\end{equation}
+ove $\epsilon_{ijk}$ sono dette \textit{costanti di struttura}\footnote{Le costanti di struttura di un gruppo sono indipendenti dalla rappresentazione.}. La relazione \eqref{eq:alg_lie_so3} è detta \textit{algebra di Lie degli operatori di $SO(3)$}.
+
+Abbiamo appena visto che, in generale, i generatori di un gruppo non commutano, possiamo, però, introdurre l'\textit{operatore di Casimir} $J^2=J_x^2+J_y^2+J_z^2$ il quale, per definizione, commuta con tutti i generatori del gruppo.
+\begin{equation}
+    \left[J^2,J_i\right]=0 \qquad \forall i
+\end{equation}
+
+Ora mostriamo come sia possibile, a partire dai generatori, costruire gli elementi del gruppo. Dalla definizione di generatore e considerando la rotazione infinitesima $\delta \theta$, abbiamo:
+\begin{equation}
+    R_z(\delta\theta)=\mathds{I}+iJ_z\delta\theta
+\end{equation}
+considerando un angolo finito $\theta=N\delta\theta$ per $N\xrightarrow{}\infty$, sappiamo che è possibile esprimere una rotazione di un angolo $\theta$ come una composizione di  $N$ rotazioni infinitesime\footnote{In particolare abbiamo che la rotazione finita è esprimibile come prodotto delle rotazioni infinitesime.}:
+\begin{equation}
+    R_z(\theta)=\left[R_z(\delta\theta)\right]^N=\left[\mathds{I}+iJ_z\delta\theta\right]^N=\left[\mathds{I}+iJ_z\dfrac{\theta}{N}\right]^N=e^{iJ_z\theta}
+\end{equation}
+sviluppando l'esponenziale in serie:
+\begin{equation}
+    e^{iJ_z\theta}=\mathds{I}+iJ_z\theta-J_z^2\dfrac{\theta^2}{2!}-iJ_z^3\dfrac{\theta^3}{3!}+\cdots
+\end{equation}
+in formalismo matriciale:
+
+\begin{equation*}
+    \begin{pmatrix}
+ \cos{\theta}&\sin{\theta}&0  \\
+  -\sin{\theta}&\cos{\theta}&0\\
+0&0&1\\
+\end{pmatrix}= \begin{pmatrix}
+ 1&0&0  \\
+ 0&1&0\\
+0&0&1\\
+\end{pmatrix}+\theta\begin{pmatrix}
+ 0&1&0  \\
+ -1&0&0\\
+0&0&0\\
+\end{pmatrix}+\dfrac{\theta^2}{2!}\begin{pmatrix}
+ -1&0&0  \\
+0 &-1&0\\
+0&0&0\\
+\end{pmatrix}
+\end{equation*}
+Possiamo generalizzare le relazioni ottenute considerando la rotazione nel piano ortogonale al vettore $\hat{n}$:
+\begin{equation}
+    \Vec{\theta}=\hat{n}\theta; \qquad R_n(\theta)=e^{i\Vec{J}\Vec{\theta}}
+\end{equation}
+
+
+Consideriamo, ora, un nuovo gruppo, il quale, dimostreremo, rappresenta anch'esso le rotazioni.
+Il gruppo è $SU(2)$, quindi di matrici $2\times2$, speciali e unitarie\footnote{Ricordiamo che la definizione di unitarietà, presuppone la proprietà $UU^+=\mathds{I}$, quindi $U^+=U^{-1}$.}. Una generica matrice avrà forma:
+\begin{equation}\phantomsection\label{eq:mat_uni}
+  U=\begin{pmatrix}
+ a&b \\
+c &d\\
+\end{pmatrix}
+\end{equation}
+ove gli elementi della matrice sono, in generale, complessi. Applicando l'aggiunzione\footnote{Ricordiamo che l'aggiunzione consiste nella trasposizione coniugata.}, otteniamo:
+\begin{equation}\phantomsection\label{eq:mat_uni_agg}
+  U^+=\begin{pmatrix}
+ a^*&c^* \\
+b^* &d^*\\
+\end{pmatrix}
+\end{equation}
+Sappiamo che la matrice inversa della \eqref{eq:mat_uni} è
+\begin{equation}\phantomsection\label{eq:mat_uni_inv}
+  U^{-1}=\begin{pmatrix}
+ d&-b \\
+-c &a\\
+\end{pmatrix}
+\end{equation}
+poiché sappiamo che la matrice aggiunta e quella inversa devono essere uguali per la proprietà di unitarietà, concludiamo che la matrice dovrà avere una forma del tipo:
+\begin{equation}
+  U=\begin{pmatrix}
+ a&b \\
+-b^* &a^*\\
+\end{pmatrix}
+\end{equation}
+quindi siamo passati da 4 numeri complessi a 2, quindi 4 numeri reali. Dalla condizione si specialità abbiamo che il determinate sarà:
+\begin{equation}
+    |a|^2+|b|^2=1
+\end{equation}
+quest'ultima relazione mostra che i numeri complessi $a$ e $b$ non sono indipendenti, in particolare avremo che i parametri reali indipendenti saranno $4-1=3$, i quali sono i parametri necessari alla descrizione delle rotazioni.
+
+Definiamo uno \textit{spinore} come un vettore bidimensionale complesso del tipo:
+\begin{equation}
+    \xi=\begin{pmatrix}
+ \xi_1 \\
+\xi_2\\
+\end{pmatrix}
+\end{equation}
+possiamo definire la trasformazione $\xi\xrightarrow{}\xi'=U\xi$:
+\begin{equation}
+   \begin{pmatrix}
+ \xi_1' \\
+\xi_2'\\
+\end{pmatrix}=\begin{pmatrix}
+ a&b \\
+-b^* &a^*\\
+\end{pmatrix} \begin{pmatrix}
+ \xi_1 \\
+\xi_2\\
+\end{pmatrix}
+\end{equation}
+abbiamo che le componenti saranno:
+\begin{equation}
+    \begin{cases}
+        \xi_1'=a\xi_1+b\xi_2\\
+        \xi_2'=-b^*\xi_1+a^*\xi_2
+    \end{cases}
+    \end{equation}
+Consideriamo il vettore tridimensionale:
+\begin{equation}
+    \Vec{r}=\begin{pmatrix}
+ x \\
+y\\
+z
+\end{pmatrix}
+\end{equation}
+a partire da questo possiamo costruire l'oggetto:
+\begin{equation}
+   h=\Vec{\sigma}\cdot \Vec{r}=\begin{pmatrix}
+ z &x-iy\\
+x+iy&-z\\
+\end{pmatrix}
+\end{equation}
+ove $\Vec{\sigma}$ rappresenta un vettore che ha per componenti le matrici di Pauli:
+\begin{equation}
+  \sigma_x=\begin{pmatrix}
+ 0 &1\\
+1&0\\
+\end{pmatrix}; \sigma_y=\begin{pmatrix}
+ 0&-i\\
+i&0\\
+\end{pmatrix}; \sigma_z=\begin{pmatrix}
+ 1&0\\
+0&-1\\
+\end{pmatrix}
+\end{equation}
+Notiamo che $h$ è una matrice hermitaina con traccia nulla con determinante $\det (h)=x^2+y^2+z^2$.
+A questo punto, definiamo la trasformazione $h\xrightarrow{}h'=UhU^+$, ove $U\in SU(2)$. Si può dimostrare che anche $h'$ è hermitiana e a traccia nulla\footnote{Come prima, abbiamo una matrice matrice con 4 elemnti complessi, quindi 8 reali. Le condizioni di hermiticità e di traccia nulla implicano che saranno solo 3 ad essere indipendenti.}.
+
+Possiamo quindi scrivere:
+\begin{equation}\phantomsection\label{eq:h_trasf}
+   h'=\begin{pmatrix}
+ z' &x'-iy'\\
+x'+iy'&-z'\\
+\end{pmatrix}=
+\begin{pmatrix}
+ a&b \\
+-b^* &a^*\\
+\end{pmatrix} 
+\begin{pmatrix}
+ z &x-iy\\
+x+iy&-z\\
+\end{pmatrix}
+\begin{pmatrix}
+ a^*&-b \\
+b^* &a\\
+\end{pmatrix} 
+\end{equation}
+e il suo determinante $\det(h')=\det(UhU^+)=\det(U)\det(h)\det(U^+)=\det(h)$
+Quindi la trasformazione definita sopra mantiene invariata la forma quadratica $x^2+y^2+z^2$:
+\begin{equation}
+    x^2+y^2+z^2=x'^2+y'^2+z'^2
+\end{equation}
+tale proprietà è congruente con la proprietà delle rotazioni, quindi questo tipo di trasformazioni \say{simula} le rotazioni in $\mathds{R}^3$.
+
+Sviluppando i calcoli della \eqref{eq:h_trasf} otteniamo le componenti:
+\begin{equation}
+    \begin{cases}
+        x'=\dfrac{1}{2}(a^2+a^{*2}-b^2-b^{*2})x-\dfrac{i}{2}(a^2-a^{*2}+b^2-b^{*2})y-(a^*b^*+ab)z\\
+        y'=\dfrac{i}{2}(a^2-a^{*2}-b^2+b^{*2})x+\dfrac{1}{2}(a^2+a^{*2}+b^2+b^{*2})y-i(ab-a^*b^*)z\\
+        z'=(ab^*+b^*a)x+i(ba^*-ab^*)y+(|a|^2-|b|^2)z
+    \end{cases}
+\end{equation}
+
+Ora, consideriamo tre esempi, ricordiamo che $a$ e $b$ devono soddisfare $|a|^2+|b|^2=1$.
+\begin{enumerate}
+    \item  Consideriamo $a=e^{i\frac{\alpha}{2}}$ e $b=0$ da cui otteniamo:
+    \begin{equation}
+        \begin{cases}
+             x'=x\cos{\alpha}+y\sin{\alpha}\\
+        y'=-x\sin{\alpha}+y\cos{\alpha}\\
+        z'=z
+        \end{cases}
+    \end{equation}
+quindi le matrici che rappresentano la stessa rotazione sono:
+\begin{equation}
+        U=\begin{pmatrix}
+e^{i\frac{\alpha}{2}}  &0\\
+0&e^{-i\frac{\alpha}{2}}\\
+\end{pmatrix} \qquad\Longleftrightarrow\qquad R_z(\alpha)= \begin{pmatrix}
+ \cos{\alpha}&\sin{\alpha}&0  \\
+  -\sin{\alpha}&\cos{\alpha}&0\\
+0&0&1\\
+\end{pmatrix}
+    \end{equation}
+    considerando i generatori abbiamo:
+    \begin{equation}
+        U=e^{i\sigma_z\frac{\alpha}{2}} \qquad\Longleftrightarrow\qquad R_z(\alpha)= e^{iJ_z\alpha}
+    \end{equation}
+
+
+
+    
+    \item Consideriamo $a=\cos{\frac{\beta}{2}}$ e $b=\sin{\frac{\beta}{2}}$ da cui otteniamo le matrici che rappresentano la rotazione nel piano x-z sono:
+\begin{equation}
+        U=\begin{pmatrix}
+\cos{\frac{\beta}{2}}  &\sin{\frac{\beta}{2}}\\
+-\sin{\frac{\beta}{2}}&\cos{\frac{\beta}{2}}\\
+\end{pmatrix} \qquad\Longleftrightarrow\qquad  R_y(\beta)= \begin{pmatrix}
+ \cos{\beta}&0&0-\sin{\beta} \\
+ 0&1&0\\
+  \sin{\beta}&0&\cos{\beta}\\
+\end{pmatrix}
+    \end{equation}
+    considerando i generatori abbiamo:
+    \begin{equation}
+        U=e^{i\sigma_y\frac{\beta}{2}} \qquad\Longleftrightarrow\qquad R_y(\beta)= e^{iJ_y\beta}
+    \end{equation}
+
+
+
+    
+    \item Consideriamo $a=\cos{\frac{\gamma}{2}}$ e $b=i\sin{\frac{\gamma}{2}}$ da cui otteniamo le matrici che rappresentano la rotazione nel piano y-z sono:
+\begin{equation}
+        U=\begin{pmatrix}
+\cos{\frac{\gamma}{2}}  &i\sin{\frac{\gamma}{2}}\\
+-i\sin{\frac{\gamma}{2}}&\cos{\frac{\gamma}{2}}\\
+\end{pmatrix} \qquad\Longleftrightarrow\qquad   R_x(\gamma)= \begin{pmatrix}
+  1&0&0\\
+0& \cos{\gamma}&\sin{\gamma} \\
+ 0& -\sin{\gamma}&\cos{\gamma}\\
+\end{pmatrix}
+    \end{equation}
+    considerando i generatori abbiamo:
+    \begin{equation}
+        U=e^{i\sigma_x\frac{\gamma}{2}} \qquad\Longleftrightarrow\qquad R_x(\gamma)= e^{iJ_x\gamma}
+    \end{equation}
+\end{enumerate}
+Concludiamo che in generale:
+\begin{equation}
+        U=e^{i\Vec{\sigma}\frac{\Vec{\theta}}{2}} \qquad\Longleftrightarrow\qquad R_n= e^{i\Vec{J}\Vec{\theta}}
+    \end{equation}
+osservando quest'ultima relazione vediamo che i generatori $\Vec{J}$ di $SO(3)$ hanno come controparte, nella rappresentazione di $SU(2)$, $\dfrac{\Vec{\sigma}}{2}$. Capiamo, allora, che questi sono i generatori di tale gruppo e come tali possiamo definire un'algebra di Lie\footnote{La quale sarà la medesima della rappresentazione $SO(3).$}:
+\begin{equation}\phantomsection\label{eq:alg_lie_su2}
+    \left[\dfrac{\sigma_i}{2},\dfrac{\sigma_j}{2}\right]=i\epsilon_{ijk}\dfrac{\sigma_k}{2}
+\end{equation}
+
+C'è un'ultima importante osservazione da fare.
+Le due rappresentazioni qui studiate non sono uguali o, meglio, non vi è, tra le due, una corrispondenza biunivoca.
+Se consideriamo una rotazione di $2\pi$: $\theta\xrightarrow{}\theta+2\pi$, avremo che la rappresentazione $SO(3)$ associa la medesima matrice prima e dopo la rotazione: $R\xrightarrow{}R$. Al contrario la rappresentazione $SU(2)$ fornisce la matrice opposta $U\xrightarrow{}-U$. Pertanto a una matrice $R\in SO(3)$ sono associabili due matrici $-U,U\in SU(2)$; tutte e tre queste matrici rappresentano la medesima rotazione nello spazio tridimensionale.
+
+\subsection{Gruppo di Lorentz}
+Consideriamo le trasformazioni di Lorentz, ampiamente studiate nella sezione \ref{sec:1.1}, le quali danno origine al gruppo di matrici ortogonali $O(3,1)$.
+\begin{equation}
+  x^{\alpha}\xrightarrow[\text{}]{\text{T}}x'^{\beta}=\Lambda\indices{^\beta_\nu} x^{\nu}
+\end{equation}
+In forma matriciale, sappiamo che le matrici associate a queste trasformazioni rispettano la proprietà: 
+\begin{equation}
+\Lambda^T\eta\Lambda=\eta
+\end{equation}
+ove, ricordiamo, $\eta$ è la matrice metrica. Considerando i determinati, otteniamo:
+\begin{equation}
+\det(\Lambda^T\eta\Lambda)=1 \implies \det\Lambda=\pm1
+\end{equation}
+Inoltre, si distinguono per quelle ortocrone con $\Lambda^0_0\geq 1$ e quelle non ortocrone $\Lambda^0_0\leq -1$. Sappiamo che tali trasformazioni mantengono invariata la quantità:
+\begin{equation}
+    c^2t^2-x^2-y^2-z^2=  c^2t'^2-x'^2-y'^2-z'^2
+\end{equation}
+Noi ci occuperemo in particolare del gruppo delle matrici con determinate $1$ ed ortocrone, che viene detto $SO(3,1)$.
+Le trasformazioni con determinate pari a $-1$ sono, per esempio, quella di \textit{inversione temporale} $(t\xrightarrow{}-t;\Vec{x}\xrightarrow{}\Vec{x})$ o quella di \textit{parità} $(t\xrightarrow{}t;\Vec{x}\xrightarrow{}-\Vec{x})$:
+\begin{equation}
+T= \begin{pmatrix}
+  -1&0&0&0\\
+0& 1&0&0 \\
+0&0&1&0 \\
+ 0& 0&0&1\\
+\end{pmatrix} \qquad P= \begin{pmatrix}
+  1&0&0&0\\
+0& -1&0&0 \\
+0&0&-1&0 \\
+ 0& 0&0&-1\\
+\end{pmatrix}
+    \end{equation}
+
+Il gruppo delle rotazioni studiate nella sezione precedenti risulta essere un sottogruppo del gruppo di Lorentz $SO(3,1)$, in particolare avremo che:
+\begin{equation}
+    \Lambda=\begin{pmatrix}
+     1&0&0&0\\
+     0&&&\\
+      0&&R&\\
+    0&&&\\
+\end{pmatrix}
+\end{equation}
+
+Consideriamo, ora, un boost lungo $x$, per cui avremo che la trasformazione è rappresentata dalla matrice:
+\begin{equation}
+\begin{pmatrix}
+    x'^0 \\
+    x'^1 \\
+    x'^2 \\
+    x'^4 \\
+\end{pmatrix}=
+\begin{pmatrix}
+\gamma & -\gamma\beta & 0 & 0   \\
+ -\gamma\beta &\gamma & 0 & 0    \\
+  0 & 0 & 1 & 0                   \\
+  0 & 0 & 0 & 1
+\end{pmatrix}\begin{pmatrix}
+    x^0 \\
+    x^1 \\
+    x^2 \\
+    x^4 \\
+\end{pmatrix}
+\end{equation}
+sappiamo che deve valere la relazione $\gamma^2-\beta^2\gamma^2=1$, quindi possiamo parametrizzare $\gamma=\cosh{\phi}$ e $\gamma \beta=\sinh{\phi}$
+\begin{equation}
+\begin{pmatrix}
+    x'^0 \\
+    x'^1 \\
+    x'^2 \\
+    x'^4 \\
+\end{pmatrix}=
+\begin{pmatrix}
+\cosh{\phi} & \sinh{\phi} & 0 & 0   \\
+ \sinh{\phi} &\cosh{\phi} & 0 & 0    \\
+  0 & 0 & 1 & 0                   \\
+  0 & 0 & 0 & 1
+\end{pmatrix}\begin{pmatrix}
+    x^0 \\
+    x^1 \\
+    x^2 \\
+    x^4 \\
+\end{pmatrix}
+\end{equation}
+Similmente a quanto fatto precedentemente, possiamo definire i generatori dei boost rispetto alle tre direzioni:
+\begin{equation}
+\begin{gathered}
+    K_x=\dfrac{1}{i}\dfrac{dB_x}{d\phi}(\phi)\biggm|_{\phi=0}= 
+   -i \begin{pmatrix}
+         0&1&0&0  \\
+  1&0&0&0\\
+0&0&0&0\\
+0&0&0&0\\
+    \end{pmatrix}\\
+      K_y=\dfrac{1}{i}\dfrac{dB_y}{d\psi}(\psi)\biggm|_{\psi=0}= 
+   -i \begin{pmatrix}
+         0&0&1&0  \\
+  0&0&0&0\\
+1&0&0&0\\
+0&0&0&0\\
+    \end{pmatrix}\\
+      K_z=\dfrac{1}{i}\dfrac{dB_z}{d\theta}(\theta)\biggm|_{\theta=0}= 
+   -i \begin{pmatrix}
+         0&0&0&1 \\
+  0&0&0&0\\
+0&0&0&0\\
+1&0&0&0\\
+    \end{pmatrix}
+\end{gathered}
+\end{equation}
+osserviamo che queste non sono hermitiane. Mentre i generatori per le rotazioni nel formalismo quadridimensionale sono:
+\begin{equation}
+\begin{gathered}
+    J_x= -i
+    \begin{pmatrix}
+         0&0&0&0\\
+  0&0&0&0\\
+0&0&0&1\\
+0&0&-1&0\\
+    \end{pmatrix}
+\\
+    J_y= -i
+   \begin{pmatrix}
+         0&0&0&0\\
+  0&0&0&-1\\
+0&0&0&0\\
+0&1&0&0\\
+    \end{pmatrix}\\
+     J_z=-i 
+    \begin{pmatrix}
+         0&0&0&0\\
+  0&0&1&0\\
+0&-1&0&0\\
+0&0&0&0\\
+    \end{pmatrix}
+    \end{gathered}
+\end{equation}
+Quindi una generica matrice $\Lambda$ sarà definita a partire da 6 generatori.
+Inoltre, l'algebra di Lie dei generatori:
+
+\begin{equation}
+    \left[J_i,J_j\right]=i\epsilon_{ijk}J_k
+\end{equation}
+
+\begin{equation}
+    \left[J_i,K_j\right]=i\epsilon_{ijk}K_k
+\end{equation}
+
+\begin{equation}
+    \left[K_i,K_j\right]=-i\epsilon_{ijk}J_k
+\end{equation}
+si suole dire che l'algebra dei $K_i$ non è chiusa, mentre quella dei $J_i$ è essere chiusa; questo a causa dei risultati dei commutatori.
+
+Possiamo introdurre due diversi operatori di Casimir:
+\begin{equation}
+   |\Vec{J}|^2-|\Vec{K}|^2 \quad \text{e}\quad \Vec{J}\Vec{K}=J_iK_i
+\end{equation}
+
+La rappresentazione studiata fino ad ora è una rappresentazione quadrimensionale, ora introduciamo una rappresentazione infinito dimensionale. In particolare, la prima che analizzeremo è per il gruppo delle rotazioni.
+
+Consideriamo una rotazione nel piano $x-y$:
+\begin{equation}
+    \begin{cases}
+        x'=x\cos{\theta}+y\sin{\theta} \\
+        y'=-x\sin{\theta}+y\cos{\theta} \\
+        z'=z
+    \end{cases}
+\end{equation}
+per una rotazione infinitesima, quindi per $\theta\xrightarrow{}0$, abbiamo:
+\begin{equation}
+    \begin{cases}
+        x'=x+y\theta \\
+        y'=-x\theta+y \\
+        z'=z
+    \end{cases}
+\end{equation}
+i differenziali sono:
+\begin{equation}
+    \begin{gathered}
+        dx=x'-x=y\theta\\
+        dy=y'-y=-x\theta
+    \end{gathered}
+\end{equation}
+
+Consideriamo, ora, una generica funzione $f(x,y,z)$ a cui applichiamo il generatore di una rotazione attorno all'asse $z$, avremo:
+\begin{equation}
+    \begin{aligned}
+        J_zf(x,y,z)=&-i\lim_{\theta\xrightarrow{}0} \dfrac{1}{\theta}[f(x',y',z')-f(x,y,z)]\\
+        &=-i\lim_{\theta\xrightarrow{}0} \dfrac{1}{\theta}[f(x+y\theta,-x\theta+y,z)-f(x,y,z)]\\
+        &=-i\lim_{\theta\xrightarrow{}0} \dfrac{1}{\theta}\left(\dfrac{\partial f}{\partial x}dx+\dfrac{\partial f}{\partial y}dy\right)=-i\lim_{\theta\xrightarrow{}0} \dfrac{1}{\theta}\left[\dfrac{\partial f}{\partial x}(y\theta)+\dfrac{\partial f}{\partial y}(-x\theta)\right]\\
+        &=-i\left(\dfrac{\partial f}{\partial x}y-\dfrac{\partial f}{\partial y}x\right)
+    \end{aligned}
+\end{equation}
+elidendo le $f$ e generalizzando a tutti i generatori\footnote{Notiamo che i generatori hanno la medesima forma degli operatori momento angolare in meccanica quantistica, quindi l'operatore momento angolare è il generatore delle rotazioni.}:
+\begin{equation}
+    \begin{gathered}
+        J_z=-i\left(y\dfrac{\partial }{\partial x}-x\dfrac{\partial }{\partial y}\right)\\
+          J_x=-i\left(y\dfrac{\partial }{\partial z}-z\dfrac{\partial }{\partial y}\right)\\
+            J_y=-i\left(z\dfrac{\partial }{\partial x}-x\dfrac{\partial }{\partial z}\right)
+    \end{gathered}
+\end{equation}
+per i quali vale l'algebra di Lie: 
+\begin{equation}
+    \left[J_i,J_j\right]=i\epsilon_{ijk}J_k
+\end{equation}
+Possiamo generalizzare il concetto di generatore, considerando una parametrizzazione $a^i$ generica:
+\begin{equation}\phantomsection\label{eq:genera_gener}
+    \begin{aligned}
+       X_i&=i\left[\left(\dfrac{\partial x'}{\partial a^i}\right)\biggm|_{a^i=0 }\dfrac{\partial }{\partial x}+\left(\dfrac{\partial y'}{\partial a^i}\right)\biggm|_{a^i=0 }\dfrac{\partial }{\partial y}+\left(\dfrac{\partial z'}{\partial a^i}\right)\biggm|_{a^i=0 }\dfrac{\partial }{\partial z}+\left(\dfrac{\partial t'}{\partial a^i}\right)\biggm|_{a^i=0 }\dfrac{\partial }{\partial t}\right]\\
+       &=i\left(\dfrac{\partial x'^\mu}{\partial a^i}\right)\biggm|_{a^i=0 }\dfrac{\partial }{\partial x^\mu}
+    \end{aligned}
+\end{equation}
+
+A questo punto, con la formula precedente, possiamo studiare la rappresentazione infinito dimensionale per i boost di Lorentz. Consideriamo dapprima un boost lungo x:
+\begin{equation}
+    \begin{cases}
+         x' = \gamma(x+vt)\\
+         y'=y\\
+         z'=z
+         \\
+      t'=\gamma(t+\dfrac{v}{c^2} x)
+    \end{cases}\,
+\end{equation}
+considerando la velocità come parametro facciamo le derivate:
+\begin{equation}
+    \begin{gathered}
+        \dfrac{\partial x'}{\partial v}=\gamma t-\dfrac{x+vt}{(1-\frac{v^2}{c^2})^\frac{3}{2}}\left(-\dfrac{1}{2}\right)\left(2\dfrac{v}{c^2}\right)\biggm|_{v=0 }=t\\
+        \dfrac{\partial t'}{\partial v}=\gamma \dfrac{x}{c^2}-\dfrac{t+\frac{v}{c^2} x}{(1-\frac{v^2}{c^2})^\frac{3}{2}}\left(-\dfrac{1}{2}\right)\left(2\dfrac{v}{c^2}\right)\biggm|_{v=0 }=\dfrac{x}{c^2}
+    \end{gathered}
+\end{equation}
+quindi i generatori sono:
+\begin{equation}
+    \begin{gathered}
+        K_x=-i\left(t\dfrac{\partial }{\partial x}+x\dfrac{\partial }{\partial t}\right)\\
+          K_y=-i\left(t\dfrac{\partial }{\partial y}+y\dfrac{\partial }{\partial t}\right)\\
+            K_z=-i\left(t\dfrac{\partial }{\partial z}+z\dfrac{\partial }{\partial t}\right)
+    \end{gathered}
+\end{equation}
+possiamo verificare che l'algebra dei generatori è l'algebra di Lie:
+\begin{equation}
+    \begin{gathered}
+        \left[J_i,J_j\right]=i\epsilon_{ijk}J_k\\
+        \left[J_i,K_j\right]=i\epsilon_{ijk}K_k\\
+         \left[K_i,K_j\right]=-i\epsilon_{ijk}J_k
+    \end{gathered}
+\end{equation}
+
+Mettendo assieme quanto fatto possiamo determinare un rappresentazione infinito dimensionale per il gruppo di Lorentz.
+Partiamo a monte considerando la trasformazione di Lorentz 
+\begin{equation}
+  x^{\mu}\xrightarrow[\text{}]{\text{T}}x'^{\mu}=\Lambda\indices{^\mu_\nu} x^{\nu}
+\end{equation}
+consideriamo che la trasformazione sia infinitesima, ovvero:
+\begin{equation}\phantomsection\label{eq:tras_inf}
+  \Lambda\indices{^\mu_\nu}=\delta{^\mu_\nu}+\mathcal{E}{^\mu_\nu} \quad\text{con} \quad |\mathcal{E}{^\mu_\nu}|<<1
+\end{equation}
+Ricordiamoci che la trasformazione deve conservare la metrica:
+\begin{equation}
+\eta_{\alpha\beta}=\Lambda^\mu_\alpha\Lambda^\nu_\beta\eta_{\mu\nu}
+\end{equation}
+sostituendo:
+\begin{equation}
+\begin{gathered}
+\eta_{\alpha\beta}=(\delta^\mu_\alpha+\mathcal{E}^\mu_\alpha)(\delta^\nu_\beta+\mathcal{E}^\nu_\beta)\eta_{\mu\nu}
+\\
+\eta_{\alpha\beta}=\eta_{\alpha\beta}+\mathcal{E}^\nu_\beta\eta_{\alpha\nu}+\mathcal{E}^\mu_\alpha\eta_{\mu\beta}
+\\
+\mathcal{E}^\nu_\beta\eta_{\alpha\nu}+\mathcal{E}^\mu_\alpha\eta_{\mu\beta}=0\\
+\mathcal{E}_{\beta\alpha}+\mathcal{E}_{\alpha\beta}=0 \implies \mathcal{E}_{\beta\alpha}=-\mathcal{E}_{\alpha\beta}
+\end{gathered}
+\end{equation}
+concludiamo che è antisimmetrica e per questo dipenderà da 6 parametri indipendenti.
+
+
+La dalla definizione \eqref{eq:tras_inf} abbiamo che la  trasformazione infinitesima si presenta come:
+\begin{equation}
+ x'^\mu=\delta{^\mu_\nu}x^\nu+\mathcal{E}{^\mu_\nu}x^\nu
+\end{equation}
+da cui ricaviamo:
+\begin{equation}\phantomsection\label{eq:diff_tras}
+ \delta x^\mu=x'^\mu-x^\mu=\mathcal{E}{^\mu_\nu}x^\nu=\mathcal{E}{^{\mu\rho}}x_\rho
+\end{equation}
+che possiamo riscrivere:
+\begin{equation}
+ \delta x^\mu=i\dfrac{1}{2}\mathcal{E}{^{\sigma\rho}}L{_{\sigma\rho}}x^\mu
+\end{equation}
+ove
+\begin{equation}
+ L{_{\sigma\rho}}\coloneqq i(x_\rho\partial_\sigma-x_\sigma\partial_\rho)
+\end{equation}
+Verifichiamo l'uguaglianza tra le due:
+\begin{equation}
+\begin{aligned}
+ \delta x^\mu&=i\dfrac{1}{2}\mathcal{E}{^{\sigma\rho}}L{_{\sigma\rho}}x^\mu=i\dfrac{1}{2}\mathcal{E}{^{\sigma\rho}}i(x_\rho\partial_\sigma-x_\sigma\partial_\rho)x^\mu\\
+ &=-\dfrac{1}{2}\mathcal{E}{^{\sigma\rho}}(x_\rho\delta^\mu_\sigma-x_\sigma\delta^\mu_\rho)=-\dfrac{1}{2}\mathcal{E}{^{\mu\rho}}x_\rho+\dfrac{1}{2}\mathcal{E}{^{\sigma\mu}}x_\sigma\\
+ &=\dfrac{1}{2}\mathcal{E}{^{\rho\mu}}x_\rho+\dfrac{1}{2}\mathcal{E}{^{\rho\mu}}x_\rho=\mathcal{E}{^{\rho\mu}}x_\rho
+\end{aligned}
+\end{equation}
+Considerando le componenti abbiamo:
+\begin{equation}
+\begin{gathered}
+ L{_{0k}}= i(t\partial_k-x_k\partial_0)=i(t\partial_k+x^k\partial_0)\\
+  L{_{ij}}= i(x_i\partial_j-x_j\partial_i)=-i(x^i\partial_j-x^j\partial_i)
+\end{gathered}
+\end{equation}
+in questo modo abbiamo trovato i sei generatori precedenti, però scritti in forma covariante. L'algebra del gruppo di Lorentz in forma covariante è:
+\begin{equation}
+        \left[L_{\mu \nu},L_{\rho \sigma}\right]=i\eta_{\nu \rho}L_{\mu \sigma}-i\eta_{\mu \rho}L_{\nu \sigma}-i\eta_{\nu \sigma}L_{\mu \rho}+i\eta_{\mu \sigma}L_{\nu \rho}\\
+\end{equation}
+
+Approfondiamo questa algebra. Se definiamo un nuovo operatore a partire da quelli studiati in precedenza, in particolare:
+\begin{equation}
+    N_i=\dfrac{1}{2}(j_i+iK_i)
+\end{equation}
+otteniamo la seguente algebra dei $N_i$:
+\begin{equation}
+    \begin{gathered}
+        \left[N_i,N_j^+\right]=0\\
+        \left[N_i,N_j\right]=i\epsilon_{ijk}N_k\\
+         \left[N_i^+,N_j^+\right]=i\epsilon_{ijk}N_k^+
+    \end{gathered}
+\end{equation}
+tali proprietà dell'algebra determinano una, così detta, \textit{algebra diagonale}.
+
+Quindi abbiamo trovato che, in termini di questi operatori, il gruppo di Lorentz è descritto da due insiemi di operatori commutanti tra loro, ciascuno soggetto ad un algebra di Lie. Di fatto abbiamo $SO(3,1)\simeq SU(2)\otimes SU(2)$.
+
+
+\subsection{Gruppo di Poincaré}
+Nella fisica delle particelle elementari abbiamo che il gruppo fondamentale è quello di Poincaré. Le trasformazioni di Poincaré sono trasformazioni di Lorentz a cui si aggiungono le traslazioni:
+\begin{equation}
+  x^\mu\xrightarrow[\text{}]{\text{P}}x'^{\mu}=\Lambda\indices{^\mu_\nu} x^{\nu} +a^\mu
+\end{equation}
+formano un gruppo. I parametri saranno 6 per Lorentz e 4 per le traslazioni, quindi 10 parametri totali; questo significa 10 generatori.
+
+Consideriamo il caso particolare nel quale la trasformazione consiste solo di una traslazione rispetto a $x$:
+\begin{equation}
+  x\xrightarrow[\text{}]{\text{P}}x'=x-a
+\end{equation}
+Per determinare il generatore corrispondente riprendiamo la \eqref{eq:genera_gener}:
+\begin{equation}
+  P_x=i(-1)\dfrac{\partial}{\partial x}=-i\dfrac{\partial}{\partial x}
+\end{equation}
+ a meno di un $\hbar$ abbiamo trovato l'operatore impulso in meccanica quantistica. Concludiamo che l'impulso genera traslazioni. Quindi in generale varrà:
+ \begin{equation}\phantomsection\label{eq:op_poincare}
+  P_\mu=-i\dfrac{\partial}{\partial x^\mu}
+\end{equation}
+che insieme a 
+\begin{equation}
+ L{_{\sigma\rho}}= i(x_\rho\partial_\sigma-x_\sigma\partial_\rho)
+\end{equation}
+formano tutti i generatori del gruppo di Poincaré, i quali avranno l'algebra:
+\begin{equation}
+\begin{gathered}
+        \left[L_{\mu \nu},L_{\rho \sigma}\right]=i\eta_{\nu \rho}L_{\mu \sigma}-i\eta_{\mu \rho}L_{\nu \sigma}-i\eta_{\nu \sigma}L_{\mu \rho}+i\eta_{\mu \sigma}L_{\nu \rho}\\
+        \left[P_{\mu},P_\nu\right]=0\\
+        \left[P_\mu,L_{\rho \sigma}\right]=i(\eta_{\mu \rho}P_\sigma-\eta_{\mu \sigma}P_\rho)
+\end{gathered}
+\end{equation}
